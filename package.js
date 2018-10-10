@@ -1,8 +1,8 @@
 Package.describe({
-  name: 'tunguska:imgur',
+  name: 'Javdu10:imgur',
   version: '0.0.1',
-  summary: 'OAuth handler for Imgur',
-  git: 'https://github.com/robfallows/tunguska-imgur',
+  summary: 'OAuth handler for UTT',
+  git: 'https://github.com/Javdu10/tunguska-imgur.git',
   documentation: 'README.md'
 });
 
@@ -16,12 +16,12 @@ Package.onUse(function(api) {
   api.use(['underscore', 'service-configuration'], ['client', 'server']);
   api.use(['random', 'templating'], 'client');
 
-  api.export('Imgur');
+  api.export('UTT');
 
   api.addFiles(
-    ['imgur_configure.html', 'imgur_configure.js'],
+    ['utt_configure.html', 'utt_configure.js'],
     'client');
 
-  api.addFiles('imgur_server.js', 'server');
-  api.addFiles('imgur_client.js', 'client');
+  api.addFiles('utt_server.js', 'server');
+  api.addFiles('utt_client.js', 'client');
 });
