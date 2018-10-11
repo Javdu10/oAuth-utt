@@ -4,12 +4,12 @@
  * Define the base object namespace. By convention we use the service name
  * in PascalCase (aka UpperCamelCase). Note that this is defined as a package global.
  */
-UTT = {};
+Utt = {};
 
 /**
  * Boilerplate hook for use by underlying Meteor code
  */
-UTT.retrieveCredential = (credentialToken, credentialSecret) => {
+Utt.retrieveCredential = (credentialToken, credentialSecret) => {
   return OAuth.retrieveCredential(credentialToken, credentialSecret);
 };
 
@@ -20,7 +20,7 @@ UTT.retrieveCredential = (credentialToken, credentialSecret) => {
  * Note that we *must* have an id. Also, this array is referenced in the
  * accounts-utt package, so we should probably keep this name and structure.
  */
-UTT.whitelistedFields = ['id', 'email', 'reputation', 'created'];
+Utt.whitelistedFields = ['id', 'email', 'reputation', 'created'];
 
 /**
  * Register this service with the underlying OAuth handler
@@ -45,7 +45,7 @@ OAuth.registerService('utt', 2, null, function(query) {
 
   /**
    * Get the token and username (Meteor handles the underlying authorization flow).
-   * Note that the username comes from from this request in UTT.
+   * Note that the username comes from from this request in Utt.
    */
   const response = getTokens(config, query);
   const accessToken = response.accessToken;
@@ -79,7 +79,7 @@ OAuth.registerService('utt', 2, null, function(query) {
   if (response.refreshToken) {
     serviceData.refreshToken = response.refreshToken;
   }
-  _.extend(serviceData, _.pick(identity, UTT.whitelistedFields));
+  _.extend(serviceData, _.pick(identity, Utt.whitelistedFields));
 
   /**
    * Return the serviceData object along with an options object containing
@@ -103,7 +103,7 @@ OAuth.registerService('utt', 2, null, function(query) {
  * repectively.
  */
 
-/** getTokens exchanges a code for a token in line with UTT's documentation
+/** getTokens exchanges a code for a token in line with Utt's documentation
  *
  *  returns an object containing:
  *   accessToken        {String}
@@ -128,7 +128,7 @@ const getTokens = function(config, query) {
     response = HTTP.post(
       endpoint, {
         params: {
-          authorization_code: query.code,
+          code: query.code,
           client_id: config.clientId,
           client_secret: OAuth.openSecret(config.secret),
           grant_type: 'authorization_code'
@@ -136,7 +136,7 @@ const getTokens = function(config, query) {
       });
 
   } catch (err) {
-    throw _.extend(new Error(`Failed to complete OAuth handshake with UTT. ${err.message}`), {
+    throw _.extend(new Error(`Failed to complete OAuth handshake with Utt. ${err.message}`), {
       response: err.response
     });
   }
@@ -146,7 +146,7 @@ const getTokens = function(config, query) {
     /**
      * The http response was a json object with an error attribute
      */
-    throw new Error(`Failed to complete OAuth handshake with UTT. ${response.data.error}`);
+    throw new Error(`Failed to complete OAuth handshake with Utt. ${response.data.error}`);
 
   } else {
 
@@ -169,10 +169,10 @@ const getTokens = function(config, query) {
 };
 
 /**
- * getAccount gets the basic UTT account data
+ * getAccount gets the basic Utt account data
  *
  *  returns an object containing:
- *   firstname             {String}         The user's UTT id
+ *   firstname             {String}         The user's Utt id
  *   lastname            {String}          The account username as requested in the URI
  *   name            {String}          A basic description the user has filled out
  *   branch     {String}           The reputation for the account.
@@ -190,7 +190,7 @@ const getAccount = function(config, accessToken) {
 
   /**
    * Note the strange .data.data - the HTTP.get returns the object in the response's data
-   * property. Also, UTT returns the data we want in a data property of the response data
+   * property. Also, Utt returns the data we want in a data property of the response data
    * Hence (response).data.data
    */
   try {
@@ -204,7 +204,7 @@ const getAccount = function(config, accessToken) {
     return accountObject;
 
   } catch (err) {
-    throw _.extend(new Error(`Failed to fetch account data from UTT. ${err.message}`), {
+    throw _.extend(new Error(`Failed to fetch account data from Utt. ${err.message}`), {
       response: err.response
     });
   }

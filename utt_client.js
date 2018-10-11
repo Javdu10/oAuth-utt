@@ -4,16 +4,16 @@
  * Define the base object namespace. By convention we use the service name
  * in PascalCase (aka UpperCamelCase). Note that this is defined as a package global (boilerplate).
  */
-UTT = {};
+Utt = {};
 
 /**
- * Request UTT credentials for the user (boilerplate).
+ * Request Utt credentials for the user (boilerplate).
  * Called from accounts-utt.
  *
  * @param {Object}    options                             Optional
  * @param {Function}  credentialRequestCompleteCallback   Callback function to call on completion. Takes one argument, credentialToken on success, or Error on error.
  */
-UTT.requestCredential = function(options, credentialRequestCompleteCallback) {
+Utt.requestCredential = function(options, credentialRequestCompleteCallback) {
   /**
    * Support both (options, callback) and (callback).
    */
@@ -40,17 +40,17 @@ UTT.requestCredential = function(options, credentialRequestCompleteCallback) {
   /**
    * Boilerplate
    */
-  const credentialToken = Random.secret();
+  const credentialToken = 'xyz'
   const loginStyle = OAuth._loginStyle('utt', config, options);
 
   /**
-   * UTT requires response_type and client_id
+   * Utt requires response_type and client_id
    * We use state to roundtrip a random token to help protect against CSRF (boilerplate)
    */
   const loginUrl = 'https://etu.utt.fr/api/oauth/authorize' +
     '?response_type=code' +
     '&client_id=' + config.clientId +
-    '&state=xyz'+ //+ OAuth._stateParam(loginStyle, credentialToken);
+    '&state='+ OAuth._stateParam(loginStyle, credentialToken);
     'scope=public'
   /**
    * Client initiates OAuth login request (boilerplate)

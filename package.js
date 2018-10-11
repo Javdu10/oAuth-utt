@@ -1,6 +1,6 @@
 Package.describe({
   name: 'jav:utt',
-  version: '0.0.1',
+  version: '0.0.6',
   summary: 'OAuth handler for UTT',
   git: 'https://github.com/Javdu10/tunguska-imgur.git',
   documentation: 'README.md'
@@ -16,7 +16,7 @@ Package.onUse(function(api) {
   api.use(['underscore', 'service-configuration'], ['client', 'server']);
   api.use(['random', 'templating'], 'client');
 
-  api.export('UTT');
+  api.export('Utt');
 
   api.addFiles(
     ['utt_configure.html', 'utt_configure.js'],
