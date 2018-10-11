@@ -20,7 +20,7 @@ Utt.retrieveCredential = (credentialToken, credentialSecret) => {
  * Note that we *must* have an id. Also, this array is referenced in the
  * accounts-utt package, so we should probably keep this name and structure.
  */
-Utt.whitelistedFields = ['id', 'email', 'reputation', 'created'];
+Utt.whitelistedFields = ['firstName', 'lastName', 'bdeMember','branch','email'];
 
 /**
  * Register this service with the underlying OAuth handler
@@ -72,6 +72,7 @@ OAuth.registerService('utt', 2, null, function(query) {
    *  created
    * We'll put the username into the user's profile
    */
+
   const serviceData = {
     accessToken,
     expiresAt: (+new Date) + (1000 * response.expiresIn)
@@ -79,7 +80,11 @@ OAuth.registerService('utt', 2, null, function(query) {
   if (response.refreshToken) {
     serviceData.refreshToken = response.refreshToken;
   }
-  _.extend(serviceData, _.pick(identity, Utt.whitelistedFields));
+  const options = {}
+  options.username = identity.login
+  _.extend(options, _.pick(identity, Utt.whitelistedFields));
+
+  serviceData.id = identity.studentId;
 
   /**
    * Return the serviceData object along with an options object containing
@@ -87,11 +92,7 @@ OAuth.registerService('utt', 2, null, function(query) {
    */
   return {
     serviceData: serviceData,
-    options: {
-      profile: {
-        
-      }
-    }
+    options
   };
 });
 
@@ -162,8 +163,7 @@ const getTokens = function(config, query) {
     return {
       accessToken: response.data.access_token,
       refreshToken: response.data.refresh_token,
-      expiresIn: response.data.expires_in,
-      username: response.data.account_username
+      expiresIn: response.data.expires_in
     };
   }
 };

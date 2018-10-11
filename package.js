@@ -1,6 +1,6 @@
 Package.describe({
   name: 'jav:utt',
-  version: '0.0.6',
+  version: '0.0.14',
   summary: 'OAuth handler for UTT',
   git: 'https://github.com/Javdu10/tunguska-imgur.git',
   documentation: 'README.md'
