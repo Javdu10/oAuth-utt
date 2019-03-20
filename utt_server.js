@@ -72,10 +72,10 @@ OAuth.registerService('utt', 2, null, function(query) {
    *  created
    * We'll put the username into the user's profile
    */
-
+  
   const serviceData = {
     accessToken,
-    expiresAt: (+new Date) + (1000 * response.expires_in)
+    expiresAt:(+new Date() + 1000 * response.expiresIn)
   };
   if (response.refreshToken) {
     serviceData.refreshToken = response.refreshToken;
