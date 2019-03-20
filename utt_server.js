@@ -75,7 +75,7 @@ OAuth.registerService('utt', 2, null, function(query) {
 
   const serviceData = {
     accessToken,
-    expiresAt: (+new Date) + (1000 * response.expiresIn)
+    expiresAt: (+new Date) + (1000 * response.expires_in)
   };
   if (response.refreshToken) {
     serviceData.refreshToken = response.refreshToken;
